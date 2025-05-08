@@ -38,20 +38,36 @@ class ConcreteStrategyC : public Strategy {
 };
 
 class Context {
-public:
-    Context(Strategy* s) : strategy(s) {}
-    ~Context() {
-        delete strategy;
-    }
+    private:
+        Strategy* strategy;
+    public:
+        Context(Strategy* s) : strategy(s) {}
+        // Context(Strategy* s){     krta yh bhi yhi kaam hai lekin upr waala efficient hai 
+        //     this->strategy = s;
+        // }
+        ~Context() {
+            delete strategy;
+        }
 
-    void contextInterface() {
-        strategy->algorithmInterface();
-    }
-private:
-    Strategy* strategy;
+        void contextInterface() {
+            strategy->algorithmInterface();
+        }
 };
 
 int main() {
-    Context context(new ConcreteStrategyA());
-    context.contextInterface();
+    Context* contextA = new Context(new ConcreteStrategyA());
+    contextA->contextInterface();
+    delete contextA;
+
+    Context* contextB = new Context(new ConcreteStrategyB());
+    contextB->contextInterface();
+    delete contextB;
+
+    Context* contextC = new Context(new ConcreteStrategyC());
+    contextC->contextInterface();
+    delete contextC;
+
+    return 0;
+    // Context context(new ConcreteStrategyA());
+    // context.contextInterface();
 }
